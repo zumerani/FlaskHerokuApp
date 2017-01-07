@@ -1,3 +1,5 @@
+import os #Gives us access to Heroku's dyno environment variables and other OS-related things
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -12,7 +14,7 @@ from resources.store import Store , StoreList
 #Flask-RESTful is an extension for Flask that adds support for quickly building REST APIs.
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db' #Tells SQLAlchemy where our databse (data.db) is (it is at /data.db). It doesn't have to be 'sqlite' it can be postgres or mysql, etc.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL' , 'sqlite:///data.db') #Grab's the OS (Heroku Server OS) environment variable which we set in 'settings' in Heroku for PostgreSQL.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Turns off flask_sqlalchemy modification tracker, but not SQLAlchemy modification behavior
 app.secret_key = 'zain'
 api = Api(app)
