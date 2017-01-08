@@ -31,6 +31,7 @@ class ItemModel(db.Model): #Extends db.Model
         #The query is essentially a SQL command
 
     def save_to_db(self):
+        print("Item is {0}: ".format(self.name))
         db.session.add(self) #'session' belonds to db and it is a collection of objects we add to.
         db.session.commit() #Note: SQLAlchemy will do an 'update' it actually updates. (upserting)
 
